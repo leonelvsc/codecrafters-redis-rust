@@ -3,7 +3,8 @@
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{TcpListener, TcpStream};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     println!("Logs from your program will appear here!");
 
@@ -14,7 +15,9 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(_stream) => {
-                handle_new_stream(&_stream);
+                tokio::spawn(async move {
+                    handle_new_stream(&_stream).await;
+                });
             }
             Err(e) => {
                 println!("error: {}", e);
@@ -23,7 +26,7 @@ fn main() {
     }
 }
 
-fn handle_new_stream(mut stream: &TcpStream) {
+async fn handle_new_stream(mut stream: &TcpStream) {
     let buf_reader = BufReader::new(stream);
 
     println!("Reading...");
