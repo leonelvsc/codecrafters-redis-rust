@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7cb064d8-5dde-43a4-b280-fb5126f3fd89" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +17,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -30,23 +38,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/main.rs&quot;: &quot;true&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/extractor/command.rs": "true",
+    "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/main.rs": "true",
+    "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/network/extractor/mod.rs": "true",
+    "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/network/manager/manager.rs": "true",
+    "org.rust.first.attach.projects": "true",
+    "settings.editor.selected.configurable": "language.rust.cargo.check",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/network/manager/connection" />
+      <recent name="$PROJECT_DIR$/src/network/manager/tcp" />
+      <recent name="$PROJECT_DIR$/src/network" />
+    </key>
+  </component>
+  <component name="RsExternalLinterProjectSettings">
+    <option name="runOnTheFly" value="true" />
+  </component>
   <component name="RunManager" selected="Cargo.Run redis-starter-rust">
     <configuration name="Run redis-starter-rust" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
@@ -97,7 +120,11 @@
       <updated>1732048189199</updated>
       <workItem from="1732048190281" duration="746000" />
       <workItem from="1732048949946" duration="3061000" />
-      <workItem from="1732156436581" duration="365000" />
+      <workItem from="1732156436581" duration="730000" />
+      <workItem from="1732231606678" duration="1531000" />
+      <workItem from="1732302369021" duration="649000" />
+      <workItem from="1732325349005" duration="2835000" />
+      <workItem from="1732386500059" duration="4318000" />
     </task>
     <servers />
   </component>
