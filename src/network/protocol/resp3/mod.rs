@@ -4,6 +4,7 @@ use std::rc::Rc;
 use crate::network::manager::ConnectionManager;
 use crate::network::protocol::resp3::command::Command;
 use crate::network::protocol::resp3::command::echo::EchoRequest;
+use crate::network::protocol::resp3::command::hey::HeyRequest;
 
 pub mod command;
 
@@ -15,20 +16,21 @@ impl RSP3 {
     pub fn new() -> RSP3 {
         let mut hash_map: HashMap<char, Box<dyn Command>> = HashMap::new();
         hash_map.insert('*', Box::new(EchoRequest));
-        hash_map.insert('$', Box::new(EchoRequest));
+        hash_map.insert('$', Box::new(HeyRequest));
         RSP3 {
             commands: hash_map
         }
     }
 
     pub fn proccess_line(&self, line: &String, connection_manager: &ConnectionManager) {
-        let value = self.commands.get(&line.chars().next().unwrap());
+
         println!("Request: {line:#?}");
-        println!("HashMapValue: {value:#?}");
 
         //TODO refactor para instanciar comandos y el protocolo
         if line == "ECHO" {
-            connection_manager.write_to_stream("+PONG\r\n");
+            let value = self.commands.get(&'*').unwrap();
+            println!("HashMapValue: {value:#?}");
+            value.some_fn(connection_manager);
         }
     }
 }
