@@ -1,19 +1,24 @@
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{TcpStream};
+use std::ops::Deref;
+use std::rc::Rc;
+use crate::network::protocol::resp3::RSP3;
 
 pub struct ConnectionManager {
-    stream: TcpStream
+    stream: TcpStream,
+    protocol: RSP3
 }
 
 impl ConnectionManager {
     pub fn new(stream: TcpStream) -> ConnectionManager {
         ConnectionManager {
-            stream
+            stream,
+            protocol: RSP3::new(),
         }
     }
 
-    pub async fn listen(&mut self) {
-        let buf_reader = BufReader::new(&self.stream);
+    pub fn listen(&mut self) {
+        let buf_reader = BufReader::new(self.stream.try_clone().unwrap());
 
         println!("Reading...");
 
@@ -28,21 +33,15 @@ impl ConnectionManager {
                         println!("error: {}", e);
                     }
                 };
-
-                println!("Request: {line:#?}");
-
-                //TODO refactor para instanciar comandos y el protocolo
-                if line == "ECHO" {
-                    self.write_to_stream("+PONG\r\n");
-                }
+                
+                self.protocol.proccess_line(&line, self);
                 
                 line
             })
             .take_while(|l| !l.is_empty())
             .collect();
 
-        println!("Request: {all_requests:#?}");
-    }
+        println!("Request: {all_requests:#?}");    }
 
     pub fn write_to_stream(&self, string: &str) {
         println!("Response: {string:#?}");

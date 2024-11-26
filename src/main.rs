@@ -4,8 +4,10 @@ mod network;
 
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{TcpListener, TcpStream};
-
+use std::ops::Deref;
+use std::rc::Rc;
 use network::manager::{ConnectionManager};
+use crate::network::protocol::resp3::RSP3;
 
 #[tokio::main]
 async fn main() {
@@ -17,8 +19,8 @@ async fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(_stream) => {
-                tokio::spawn(async move {
-                    ConnectionManager::new(_stream).listen().await;
+                tokio::spawn(async {
+                    ConnectionManager::new(_stream).listen();
                 });
             }
             Err(e) => {
