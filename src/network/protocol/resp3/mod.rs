@@ -23,6 +23,9 @@ impl RSP3 {
     }
 
     pub fn proccess_line(&self, line: &String, connection_manager: &ConnectionManager) {
+        
+        // Acá queda desglosar el protocolo que va linea por linea, el 1er caracter nos indica el tipo de request
+        // y luego el comando
 
         println!("Request: {line:#?}");
 
