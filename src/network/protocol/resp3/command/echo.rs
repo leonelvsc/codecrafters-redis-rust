@@ -26,6 +26,7 @@ impl HasPendingRead for EchoRequest {
 
 impl<W: Write> Command<W> for EchoRequest {
     fn process_line(&mut self, line: &String) {
+        // todo: refactor data types
         if line.chars().all(char::is_alphanumeric) {
             self.data.set_data(line.clone());
         }
