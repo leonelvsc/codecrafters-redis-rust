@@ -1,4 +1,4 @@
-use std::any::TypeId;
+use std::any::{Any, TypeId};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::io::{Read, Write};
@@ -25,17 +25,26 @@ pub struct RSP3<W: Write> {
     current_data_type: Rc<RefCell<Box<dyn DataType>>>,
 }
 
-impl<W: Write> Protocol<W> for RSP3<W> {
-
+impl<W: Write + 'static> Protocol<W> for RSP3<W> {
     fn proccess_line(&mut self, line: &String, writer: &mut W) {
-        
-        if TypeId::of::<Nil>() == self.current_data_type.borrow().type_id() {
-            let data_type = self.data_types.get(&line[0..1].chars().nth(0).unwrap());
 
-            self.current_data_type = Rc::clone(&data_type.unwrap());
-            self.current_data_type.borrow_mut().process_line(&line[1..]);
+        // if TypeId::of::<Nil>() == self.current_data_type.borrow().type_id() {
+        //     let data_type = self.data_types.get(&line[0..1].chars().nth(0).unwrap());
+        //
+        //     self.current_data_type = Rc::clone(&data_type.unwrap());
+        //     self.current_data_type.borrow_mut().process_line(&line[1..]);
+        // } else {
+        //     self.current_data_type.borrow_mut().process_line(line);
+        // }
+
+        if !self.current_command.borrow().has_pending_read() {
+            self.current_command = Rc::clone(self.commands.get(line).unwrap_or(&self.current_command));
         } else {
-            self.current_data_type.borrow_mut().process_line(line);
+            self.current_command.borrow_mut().process_line(line);
+        }
+        
+        if !self.current_data_type.borrow().has_pending_read() {
+            self.current_command.borrow().process(writer);
         }
 
         println!("Request: {line:#?}");

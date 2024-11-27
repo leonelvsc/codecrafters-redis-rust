@@ -1,6 +1,7 @@
 use crate::network::protocol::resp3::command::Command;
 use crate::network::protocol::resp3::data_types::DataType;
 use std::io::Write;
+use crate::network::protocol::HasPendingRead;
 
 #[derive(Debug)]
 pub struct Array {
@@ -14,6 +15,12 @@ impl Array {
             length: 0,
             data: Vec::new(),
         }
+    }
+}
+
+impl HasPendingRead for Array {
+    fn has_pending_read(&self) -> bool {
+        self.data.len() == 0
     }
 }
 
@@ -34,5 +41,8 @@ impl DataType for Array {
         } else {
             
         }
+    }
+    fn serialize(&self) -> String {
+        "to-do".to_string()
     }
 }

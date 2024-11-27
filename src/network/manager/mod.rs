@@ -32,16 +32,14 @@ impl<R: Read, W: Write + 'static> ConnectionManager<R, W> {
         let all_requests: Vec<_> = buf_reader
             .lines()
             .map(|l| {
-                let mut line: String = String::new();
-
                 match l {
-                    Ok(ref _l) => self.protocol.proccess_line(_l, self.writer.by_ref()),
-                    Err(e) => {
+                    Ok(ref _l) => self.protocol.proccess_line(&_l, self.writer.by_ref()),
+                    Err(ref e) => {
                         println!("error: {}", e);
                     }
                 };
 
-                line
+                l.unwrap_or_default()
             })
             .take_while(|l| !l.is_empty())
             .collect();
