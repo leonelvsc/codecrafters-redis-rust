@@ -14,12 +14,13 @@ pub struct ConnectionManager<R: Read, W: Write> {
 impl<R: Read, W: Write + 'static> ConnectionManager<R, W> {
     pub fn new(
         reader: R,
-        writer: W
+        writer: W,
+        protocol: Box<dyn Protocol<W>>,
     ) -> ConnectionManager<R, W> {
         ConnectionManager {
             writer,
             reader,
-            protocol: Box::new(RSP3::new()),
+            protocol
         }
     }
 
@@ -34,13 +35,11 @@ impl<R: Read, W: Write + 'static> ConnectionManager<R, W> {
                 let mut line: String = String::new();
 
                 match l {
-                    Ok(_l) => line = _l,
+                    Ok(ref _l) => self.protocol.proccess_line(_l, self.writer.by_ref()),
                     Err(e) => {
                         println!("error: {}", e);
                     }
                 };
-
-                self.protocol.proccess_line(&line, self.writer.by_ref());
 
                 line
             })

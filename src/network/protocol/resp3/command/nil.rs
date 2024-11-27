@@ -1,19 +1,18 @@
 use std::io::Write;
-use std::rc::Rc;
 use crate::network::manager::ConnectionManager;
 use crate::network::protocol::resp3::command::Command;
 
 #[derive(Debug)]
-pub struct HeyRequest;
+pub struct NilRequest;
 
-impl HeyRequest {
-    pub fn new() -> HeyRequest {
-        HeyRequest {}
+impl NilRequest {
+    pub fn new() -> NilRequest {
+        NilRequest {}
     }
 }
 
-impl<W: Write> Command<W> for HeyRequest {
+impl<W: Write> Command<W> for NilRequest {
     fn some_fn(&self, writer: &mut W) {
-        writer.write_all(b"+PONG\r\n");
+        
     }
 }

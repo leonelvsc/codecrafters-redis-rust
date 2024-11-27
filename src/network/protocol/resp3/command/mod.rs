@@ -1,10 +1,11 @@
+use std::any::Any;
 use std::fmt::Debug;
 use std::io::Write;
-use crate::network::manager::ConnectionManager;
 
 pub mod echo;
-pub mod hey;
+pub mod ping;
+pub mod nil;
 
-pub trait Command<W: Write>: Debug {
+pub trait Command<W: Write>: Debug + Any {
     fn some_fn(&self, writer: &mut W);
 }

@@ -1,3 +1,5 @@
+use std::any::TypeId;
+use std::cell::RefCell;
 use std::collections::HashMap;
 use std::io::{Read, Write};
 use std::ptr::null;
@@ -6,39 +8,56 @@ use crate::network::manager::ConnectionManager;
 use crate::network::protocol::Protocol;
 use crate::network::protocol::resp3::command::Command;
 use crate::network::protocol::resp3::command::echo::EchoRequest;
-use crate::network::protocol::resp3::command::hey::HeyRequest;
+use crate::network::protocol::resp3::command::nil::NilRequest;
+use crate::network::protocol::resp3::command::ping::PingRequest;
+use crate::network::protocol::resp3::data_types::array::Array;
+use crate::network::protocol::resp3::data_types::bulk_string::BulkString;
+use crate::network::protocol::resp3::data_types::DataType;
+use crate::network::protocol::resp3::data_types::nil::Nil;
 
 pub mod command;
+pub mod data_types;
 
 pub struct RSP3<W: Write> {
-    commands: HashMap<char, Box<dyn Command<W>>>
+    data_types: HashMap<char, Rc<RefCell<Box<dyn DataType>>>>,
+    commands: HashMap<String, Rc<RefCell<Box<dyn Command<W>>>>>,
+    current_command: Rc<RefCell<Box<dyn Command<W>>>>,
+    current_data_type: Rc<RefCell<Box<dyn DataType>>>,
 }
 
 impl<W: Write> Protocol<W> for RSP3<W> {
 
-    fn proccess_line(&self, line: &String, writer: &mut W) {
+    fn proccess_line(&mut self, line: &String, writer: &mut W) {
+        
+        if TypeId::of::<Nil>() == self.current_data_type.borrow().type_id() {
+            let data_type = self.data_types.get(&line[0..1].chars().nth(0).unwrap());
 
-        // Acá queda desglosar el protocolo que va linea por linea, el 1er caracter nos indica el tipo de request
-        // y luego el comando
+            self.current_data_type = Rc::clone(&data_type.unwrap());
+            self.current_data_type.borrow_mut().process_line(&line[1..]);
+        } else {
+            self.current_data_type.borrow_mut().process_line(line);
+        }
 
         println!("Request: {line:#?}");
-
-        //TODO refactor para instanciar comandos y el protocolo
-        if line == "ECHO" {
-            let value = self.commands.get(&'*').unwrap();
-            println!("HashMapValue: {value:#?}");
-            value.some_fn(writer);
-        }
     }
 }
 
 impl<W: Write> RSP3<W> {
     pub fn new() -> RSP3<W> {
-        let mut hash_map: HashMap<char, Box<dyn Command<W>>> = HashMap::new();
-        hash_map.insert('*', Box::new(EchoRequest));
-        hash_map.insert('$', Box::new(HeyRequest));
+        let mut data_types: HashMap<char, Rc<RefCell<Box<dyn DataType>>>> = HashMap::new();
+        data_types.insert('*', Rc::new(RefCell::new(Box::new(Array::new()))));
+        data_types.insert('$', Rc::new(RefCell::new(Box::new(BulkString::new()))));
+
+        let mut commands: HashMap<String, Rc<RefCell<Box<dyn Command<W>>>>> = HashMap::new();
+        commands.insert("ECHO".to_string(), Rc::new(RefCell::new(Box::new(EchoRequest::new()))));
+        commands.insert("PING".to_string(), Rc::new(RefCell::new(Box::new(PingRequest::new()))));
+
+
         RSP3 {
-            commands: hash_map
+            data_types,
+            commands,
+            current_command: Rc::new(RefCell::new(Box::new(NilRequest::new()))),
+            current_data_type: Rc::new(RefCell::new(Box::new(Nil::new()))),
         }
     }
 }
