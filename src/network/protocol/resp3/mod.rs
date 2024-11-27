@@ -27,6 +27,8 @@ pub struct RSP3<W: Write> {
 
 impl<W: Write + 'static> Protocol<W> for RSP3<W> {
     fn proccess_line(&mut self, line: &String, writer: &mut W) {
+        
+        //todo: initial draft, need to manage correctly data types and commands
 
         // if TypeId::of::<Nil>() == self.current_data_type.borrow().type_id() {
         //     let data_type = self.data_types.get(&line[0..1].chars().nth(0).unwrap());
