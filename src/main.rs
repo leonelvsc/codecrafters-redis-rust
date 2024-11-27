@@ -20,7 +20,10 @@ async fn main() {
         match stream {
             Ok(_stream) => {
                 tokio::spawn(async {
-                    ConnectionManager::new(_stream).listen();
+                    ConnectionManager::<TcpStream, TcpStream>::new(
+                        _stream.try_clone().unwrap(),
+                        _stream
+                    ).listen();
                 });
             }
             Err(e) => {

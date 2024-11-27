@@ -1,3 +1,4 @@
+use std::io::Write;
 use crate::network::manager::ConnectionManager;
 use crate::network::protocol::resp3::command::Command;
 
@@ -10,8 +11,8 @@ impl EchoRequest {
     }
 }
 
-impl Command for EchoRequest {
-    fn some_fn(&self, connection_manager: &ConnectionManager) {
-        connection_manager.write_to_stream("+PONG\r\n");
+impl<W: Write> Command<W> for EchoRequest {
+    fn some_fn(&self, writer: &mut W) {
+        writer.write_all(b"+PONG\r\n");
     }
 }
