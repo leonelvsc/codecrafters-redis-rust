@@ -9,7 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7cb064d8-5dde-43a4-b280-fb5126f3fd89" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/echo.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/resp3/command/echo.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/resp3/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,11 +41,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cargo.Run redis-starter-rust.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust",
+    "last_opened_file_path": "/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/network/protocol/resp3/data_types",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,9 +60,18 @@
     "org.rust.first.attach.projects": "true",
     "settings.editor.selected.configurable": "language.rust.cargo.check",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Rust"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/network/protocol/resp3/data_types" />
+      <recent name="$PROJECT_DIR$/src/network/protocol/resp3/command" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/network/manager/connection" />
       <recent name="$PROJECT_DIR$/src/network/manager/tcp" />
@@ -125,10 +136,27 @@
       <workItem from="1732302369021" duration="649000" />
       <workItem from="1732325349005" duration="2835000" />
       <workItem from="1732386500059" duration="4318000" />
+      <workItem from="1732716860411" duration="23478000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/protocol/resp3/mod.rs</url>
+          <line>41</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/protocol/resp3/mod.rs</url>
+          <line>49</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

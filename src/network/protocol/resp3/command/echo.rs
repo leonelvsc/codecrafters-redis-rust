@@ -36,7 +36,7 @@ impl<W: Write> Command<W> for EchoRequest {
         if self.data.len() == 0 {
             return;
         }
-        
+
         writer.write_all(self.data.serialize().as_bytes()).expect("TODO: can't write to stream");
     }
 }

@@ -28,7 +28,9 @@ pub struct RSP3<W: Write> {
 impl<W: Write + 'static> Protocol<W> for RSP3<W> {
     fn proccess_line(&mut self, line: &String, writer: &mut W) {
         
-        //todo: initial draft, need to manage correctly data types and commands
+        println!("Request: {line:#?}");
+        
+        //todo: initial draft, need to correctly manage data types and commands
 
         // if TypeId::of::<Nil>() == self.current_data_type.borrow().type_id() {
         //     let data_type = self.data_types.get(&line[0..1].chars().nth(0).unwrap());
@@ -45,11 +47,10 @@ impl<W: Write + 'static> Protocol<W> for RSP3<W> {
             self.current_command.borrow_mut().process_line(line);
         }
         
-        if !self.current_data_type.borrow().has_pending_read() {
+        // refactor delete chars alphanumeric in favor of datatypes
+        if !self.current_data_type.borrow().has_pending_read() && line.chars().all(char::is_alphanumeric) {
             self.current_command.borrow().process(writer);
         }
-
-        println!("Request: {line:#?}");
     }
 }
 
