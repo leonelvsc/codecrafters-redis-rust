@@ -3,14 +3,32 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="ALL" />
   </component>
+  <component name="BookmarksViewState">
+    <option name="rewriteBookmarkType" value="true" />
+  </component>
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cb064d8-5dde-43a4-b280-fb5126f3fd89" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/echo.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/resp3/command/echo.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/resp3/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/manager/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/manager/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/echo.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/echo.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/nil.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/ping.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/ping.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/array.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/bulk_string.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/nil.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/simple_string.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/mod.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +71,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
     "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/extractor/command.rs": "true",
     "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/main.rs": "true",
     "org.rust.disableDetachedFileInspection/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/network/extractor/mod.rs": "true",
@@ -73,9 +92,9 @@
       <recent name="$PROJECT_DIR$/src/network/protocol/resp3/command" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/network" />
       <recent name="$PROJECT_DIR$/src/network/manager/connection" />
       <recent name="$PROJECT_DIR$/src/network/manager/tcp" />
-      <recent name="$PROJECT_DIR$/src/network" />
     </key>
   </component>
   <component name="RsExternalLinterProjectSettings">
@@ -136,7 +155,8 @@
       <workItem from="1732302369021" duration="649000" />
       <workItem from="1732325349005" duration="2835000" />
       <workItem from="1732386500059" duration="4318000" />
-      <workItem from="1732716860411" duration="23478000" />
+      <workItem from="1732716860411" duration="23819000" />
+      <workItem from="1732824763444" duration="9386000" />
     </task>
     <servers />
   </component>
@@ -148,13 +168,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/network/protocol/resp3/mod.rs</url>
-          <line>41</line>
-          <option name="timeStamp" value="11" />
+          <line>40</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/network/protocol/resp3/mod.rs</url>
-          <line>49</line>
-          <option name="timeStamp" value="12" />
+          <line>47</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

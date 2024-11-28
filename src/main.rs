@@ -1,34 +1,32 @@
 #![allow(unused_imports)]
+extern crate core;
 
 mod network;
 
-use std::io::{BufRead, BufReader, Read, Write};
-use std::net::{TcpListener, TcpStream};
+use network::manager::ConnectionManager;
+use std::io::{BufRead, Read, Write};
+use tokio::net::TcpListener;
 use std::ops::Deref;
-use std::rc::Rc;
-use network::manager::{ConnectionManager};
-use crate::network::protocol::resp3::RSP3;
 
 #[tokio::main]
 async fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     println!("Logs from your program will appear here!");
     
-    let listener = TcpListener::bind("127.0.0.1:6379").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:6379").await.expect("Failed to bind port 6379");
 
-    for stream in listener.incoming() {
-        match stream {
-            Ok(_stream) => {
-                tokio::spawn(async {
-                    ConnectionManager::new(
-                        _stream.try_clone().unwrap(),
-                        _stream,
-                        Box::new(RSP3::new()),
-                    ).listen();
+    loop {
+        match listener.accept().await {
+            Ok((stream, _addr)) => {
+                // Spawn a new task to handle the connection
+                tokio::spawn(async move {
+                    ConnectionManager::new(stream)
+                        .listen()
+                        .await;
                 });
             }
             Err(e) => {
-                println!("error: {}", e);
+                println!("Error accepting connection: {}", e);
             }
         }
     }
