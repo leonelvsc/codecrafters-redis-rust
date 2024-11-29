@@ -2,12 +2,12 @@ use crate::network::command::Command;
 use bytes::Bytes;
 
 #[derive(Debug)]
-pub struct PingRequest;
+pub struct NilRequest;
 
-impl Command for PingRequest {
+impl Command for NilRequest {
 
     fn process(&self) -> String {
-        String::from("+PONG\r\n")
+        String::new()
     }
 
     fn needs_more_reading(&self) -> bool {
@@ -16,7 +16,6 @@ impl Command for PingRequest {
 
     fn set_data(&mut self, _data: Bytes) {
     }
-
 
     fn get_data(&self) -> Bytes {
         Bytes::new()

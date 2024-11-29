@@ -5,8 +5,8 @@ mod network;
 
 use network::manager::ConnectionManager;
 use std::io::{BufRead, Read, Write};
-use tokio::net::TcpListener;
 use std::ops::Deref;
+use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() {

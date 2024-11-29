@@ -1,11 +1,24 @@
-use tokio_stream::StreamExt;
-use tokio::net::{TcpStream};
-use std::str::from_utf8;
+use crate::network::command::data_wrapper::DataWrapper;
+use crate::network::command::echo::EchoRequest;
+use crate::network::command::nil::NilRequest;
+use crate::network::command::ping::PingRequest;
+use crate::network::command::Command;
 use bytes::{Bytes, BytesMut};
 use memchr::memchr;
+use std::any::{Any, TypeId};
+use std::str::from_utf8;
+use tokio::io::AsyncWriteExt;
+use tokio::net::TcpStream;
+use tokio_stream::StreamExt;
 use tokio_util::codec::Decoder;
-use crate::network::command::Command;
-use crate::network::command::ping::PingRequest;
+
+fn match_command(string: Bytes) -> Option<Box<dyn Command>> {
+    match string.iter().as_slice() {
+        b"PING" => Some(Box::new(PingRequest)),
+        b"ECHO" => Some(Box::new(EchoRequest::new())),
+        _ => None,
+    }
+}
 
 #[derive(PartialEq, Clone, Debug)]
 pub enum RedisValueRef {
@@ -15,9 +28,33 @@ pub enum RedisValueRef {
     Array(Vec<RedisValueRef>),
     NullArray,
     NullBulkString,
-    ErrorMsg(Vec<u8>), // This is not a RESP type. This is an redis-oxide internal error type.
+    ErrorMsg(Vec<u8>),
 }
 
+impl RedisValueRef {
+    fn get_command(self) -> Vec<Option<Box<dyn Command>>> {
+        match self {
+            RedisValueRef::String(string) => {
+                Vec::from([
+                    match_command(string.clone())
+                    .or(Some(Box::new(DataWrapper::new(string.clone()))))
+                ])
+            }
+            RedisValueRef::Error(string) => Vec::from([match_command(string)]),
+            RedisValueRef::Array(vec) => {
+                vec.into_iter().map(|c| c.get_command()).flatten().collect()
+            }
+            _ => Vec::new(),
+        }
+    }
+
+    fn get_bytes(self) -> Bytes {
+        match self {
+            RedisValueRef::String(bytes) => bytes,
+            _ => Bytes::new(),
+        }
+    }
+}
 
 struct BufSplit(usize, usize);
 
@@ -189,6 +226,7 @@ pub struct RespParser;
 impl Decoder for RespParser {
     type Item = RedisValueRef;
     type Error = RESPError;
+
     fn decode(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         if buf.is_empty() {
             return Ok(None);
@@ -207,16 +245,12 @@ impl Decoder for RespParser {
 }
 
 pub struct ConnectionManager {
-    socket: TcpStream
+    socket: TcpStream,
 }
 
 impl ConnectionManager {
-    pub fn new(
-        socket: TcpStream
-    ) -> ConnectionManager {
-        ConnectionManager {
-            socket
-        }
+    pub fn new(socket: TcpStream) -> ConnectionManager {
+        ConnectionManager { socket }
     }
 
     //old impl
@@ -225,11 +259,37 @@ impl ConnectionManager {
 
         while let Some(redis_value) = transport.next().await {
             println!("Readed command: {:?}", redis_value);
-            //todo decode commands and execute
+
+            let transport = transport.get_mut();
+            let mut last_command: Box<dyn Command> = Box::new(NilRequest);
+
+            match redis_value {
+                Ok(rv) => {
+                    for command in rv.get_command() {
+                        match command {
+                            Some(cmd) => {
+                                
+                                if TypeId::of::<DataWrapper>() != (*cmd).type_id() {
+                                    last_command = cmd;
+                                } else {
+                                    last_command.set_data(cmd.get_data());
+                                }
+                            }
+                            None => {}
+                        }
+
+                        if last_command.needs_more_reading() {
+                            continue;
+                        }
+
+                        transport
+                            .write_all(last_command.process().as_bytes())
+                            .await
+                            .expect("Error writing response");
+                    }
+                }
+                Err(_) => println!("Error getting redis command"),
+            }
         }
     }
-}
-
-fn translate(p0: RedisValueRef) -> Box<dyn Command> {
-    Box::new(PingRequest)
 }

@@ -11,24 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cb064d8-5dde-43a4-b280-fb5126f3fd89" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/command/echo.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/echo.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/command/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/command/ping.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/ping.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network/manager/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/manager/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/echo.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/echo.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/nil.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/command/ping.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/command/ping.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/array.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/bulk_string.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/nil.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/data_types/simple_string.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/protocol/resp3/mod.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +52,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/network/protocol/resp3/data_types",
+    "last_opened_file_path": "/home/leonelfranchelli/Trabajo/RustLab/codecrafters-redis-rust/src/network/command",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -88,6 +76,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/network/command" />
       <recent name="$PROJECT_DIR$/src/network/protocol/resp3/data_types" />
       <recent name="$PROJECT_DIR$/src/network/protocol/resp3/command" />
     </key>
@@ -156,7 +145,8 @@
       <workItem from="1732325349005" duration="2835000" />
       <workItem from="1732386500059" duration="4318000" />
       <workItem from="1732716860411" duration="23819000" />
-      <workItem from="1732824763444" duration="9386000" />
+      <workItem from="1732824763444" duration="9443000" />
+      <workItem from="1732885833583" duration="17013000" />
     </task>
     <servers />
   </component>
@@ -175,6 +165,46 @@
           <url>file://$PROJECT_DIR$/src/network/protocol/resp3/mod.rs</url>
           <line>47</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/manager/mod.rs</url>
+          <line>267</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/command/ping.rs</url>
+          <line>9</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/command/nil.rs</url>
+          <line>9</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/command/echo.rs</url>
+          <line>27</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/command/echo.rs</url>
+          <line>18</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/manager/mod.rs</url>
+          <line>280</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network/command/echo.rs</url>
+          <line>31</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$USER_HOME$/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.41.1/src/io/util/async_write_ext.rs</url>
+          <line>372</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
