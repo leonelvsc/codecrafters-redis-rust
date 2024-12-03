@@ -271,7 +271,9 @@ impl ConnectionManager {
 
             match redis_value {
                 Ok(rv) => {
-                    for command in rv.get_command(db.clone()) {
+                    let vec = rv.get_command(db.clone());
+                    let vec_length = vec.len();
+                    for (i, command) in vec.into_iter().enumerate() {
                         match command {
                             Some(cmd) => {
 
@@ -286,7 +288,7 @@ impl ConnectionManager {
                             None => {}
                         }
 
-                        if last_command.needs_more_reading() {
+                        if i < vec_length - 1 && last_command.needs_more_reading() {
                             continue;
                         }
 

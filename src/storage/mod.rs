@@ -1,9 +1,16 @@
 use std::collections::HashMap;
+use std::time::Duration;
 use tokio::sync::RwLock;
 
 #[derive(Debug)]
+struct SavedData {
+    data: String,
+    timeout: Option<Duration>,
+}
+
+#[derive(Debug)]
 pub struct MemoryStorage {
-    data: RwLock<HashMap<String, String>>
+    data: RwLock<HashMap<String, SavedData>>
 }
 
 impl MemoryStorage {
@@ -13,11 +20,11 @@ impl MemoryStorage {
         }
     }
 
-    pub async fn set(&self, key: &str, value: &str) {
-        self.data.write().await.insert(String::from(key), String::from(value));
+    pub async fn set(&self, key: &str, value: &str, timeout: Option<Duration>) {
+        self.data.write().await.insert(String::from(key), SavedData { data: String::from(value), timeout });
     }
 
     pub async fn get(&self, key: &str) -> Option<String> {
-        self.data.read().await.get(key).cloned()
+        Some(self.data.read().await.get(key)?.data.clone())
     }
 }
