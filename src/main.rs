@@ -4,12 +4,12 @@ extern crate core;
 mod network;
 mod storage;
 
+use crate::storage::MemoryStorage;
 use network::manager::ConnectionManager;
 use std::io::{BufRead, Read, Write};
 use std::ops::Deref;
 use std::sync::Arc;
 use tokio::net::TcpListener;
-use crate::storage::MemoryStorage;
 
 #[tokio::main]
 async fn main() {

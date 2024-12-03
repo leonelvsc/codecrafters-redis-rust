@@ -1,21 +1,20 @@
 use crate::network::command::data_wrapper::DataWrapper;
 use crate::network::command::echo::EchoRequest;
+use crate::network::command::get::GetRequest;
 use crate::network::command::nil::NilRequest;
 use crate::network::command::ping::PingRequest;
-use crate::network::command::Command;
 use crate::network::command::set::SetRequest;
+use crate::network::command::Command;
+use crate::storage::MemoryStorage;
 use bytes::{Bytes, BytesMut};
 use memchr::memchr;
 use std::any::{Any, TypeId};
-use std::ops::Deref;
 use std::str::from_utf8;
 use std::sync::Arc;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpStream;
 use tokio_stream::StreamExt;
 use tokio_util::codec::Decoder;
-use crate::network::command::get::GetRequest;
-use crate::storage::MemoryStorage;
 
 fn match_command(string: Bytes, db: Arc<MemoryStorage>) -> Option<Box<dyn Command>> {
     match string.iter().as_slice() {
