@@ -2,11 +2,15 @@ use bytes::Bytes;
 use std::any::Any;
 use std::fmt::Debug;
 use std::io::Write;
+use std::sync::Arc;
+use crate::storage::MemoryStorage;
 
 pub mod echo;
 pub mod ping;
 pub mod nil;
 pub mod data_wrapper;
+pub mod set;
+pub mod get;
 
 pub trait Command: Debug + Send + Any {
     fn process(&self) -> String;

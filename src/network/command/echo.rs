@@ -1,6 +1,8 @@
 use crate::network::command::Command;
 use bytes::Bytes;
 use std::str::from_utf8;
+use std::sync::Arc;
+use crate::storage::MemoryStorage;
 
 #[derive(Debug)]
 pub struct EchoRequest {
@@ -16,10 +18,6 @@ impl EchoRequest {
 impl Command for EchoRequest {
 
     fn process(&self) -> String {
-        if self.data.len() == 0 {
-            return String::new();
-        }
-
         let s =  from_utf8(self.data.as_ref()).expect("Error converting data to string");
         format!("${}\r\n{}\r\n", s.len(), s)
     }

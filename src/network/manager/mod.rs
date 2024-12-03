@@ -3,19 +3,26 @@ use crate::network::command::echo::EchoRequest;
 use crate::network::command::nil::NilRequest;
 use crate::network::command::ping::PingRequest;
 use crate::network::command::Command;
+use crate::network::command::set::SetRequest;
 use bytes::{Bytes, BytesMut};
 use memchr::memchr;
 use std::any::{Any, TypeId};
+use std::ops::Deref;
 use std::str::from_utf8;
+use std::sync::Arc;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpStream;
 use tokio_stream::StreamExt;
 use tokio_util::codec::Decoder;
+use crate::network::command::get::GetRequest;
+use crate::storage::MemoryStorage;
 
-fn match_command(string: Bytes) -> Option<Box<dyn Command>> {
+fn match_command(string: Bytes, db: Arc<MemoryStorage>) -> Option<Box<dyn Command>> {
     match string.iter().as_slice() {
         b"PING" => Some(Box::new(PingRequest)),
         b"ECHO" => Some(Box::new(EchoRequest::new())),
+        b"SET" => Some(Box::new(SetRequest::new(db))),
+        b"GET" => Some(Box::new(GetRequest::new(db))),
         _ => None,
     }
 }
@@ -32,17 +39,17 @@ pub enum RedisValueRef {
 }
 
 impl RedisValueRef {
-    fn get_command(self) -> Vec<Option<Box<dyn Command>>> {
+    fn get_command(self, db: Arc<MemoryStorage>) -> Vec<Option<Box<dyn Command>>> {
         match self {
             RedisValueRef::String(string) => {
                 Vec::from([
-                    match_command(string.clone())
+                    match_command(string.clone(), db)
                     .or(Some(Box::new(DataWrapper::new(string.clone()))))
                 ])
             }
-            RedisValueRef::Error(string) => Vec::from([match_command(string)]),
+            RedisValueRef::Error(string) => Vec::from([match_command(string, db)]),
             RedisValueRef::Array(vec) => {
-                vec.into_iter().map(|c| c.get_command()).flatten().collect()
+                vec.into_iter().map(|c| c.get_command(db.clone())).flatten().collect()
             }
             _ => Vec::new(),
         }
@@ -114,8 +121,8 @@ pub enum RESPError {
 }
 
 impl From<std::io::Error> for RESPError {
-    fn from(err: std::io::Error) -> RESPError {
-        RESPError::IOError(err)
+    fn from(_err: std::io::Error) -> RESPError {
+        RESPError::IOError(_err)
     }
 }
 
@@ -254,7 +261,7 @@ impl ConnectionManager {
     }
 
     //old impl
-    pub async fn listen(self) {
+    pub async fn listen(self, db: Arc<MemoryStorage>) {
         let mut transport = RespParser::default().framed(self.socket);
 
         while let Some(redis_value) = transport.next().await {
@@ -265,9 +272,11 @@ impl ConnectionManager {
 
             match redis_value {
                 Ok(rv) => {
-                    for command in rv.get_command() {
+                    for command in rv.get_command(db.clone()) {
                         match command {
                             Some(cmd) => {
+
+                                println!("Readed actual-command: {:?}", cmd);
                                 
                                 if TypeId::of::<DataWrapper>() != (*cmd).type_id() {
                                     last_command = cmd;
