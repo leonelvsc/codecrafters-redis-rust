@@ -27,11 +27,15 @@ impl MemoryStorage {
 
     pub async fn get(&self, key: &str) -> Option<String> {
         if let Some(res) = self.data.read().await.get(key) {
-
-            if Instant::now().duration_since(res.created_at) < res.timeout? {
-                Some(res.data.clone())
+            
+            if  res.timeout.is_some() {
+                if Instant::now().duration_since(res.created_at) < res.timeout? {
+                    Some(res.data.clone())
+                } else {
+                    None
+                }
             } else {
-                None
+                Some(res.data.clone())
             }
         } else {
             None

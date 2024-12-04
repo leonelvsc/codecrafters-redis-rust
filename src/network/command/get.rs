@@ -26,12 +26,15 @@ impl Command for GetRequest {
 
         let s =  from_utf8(self.data.as_ref()).expect("Error converting data to string");
         
-        let result = tokio::task::block_in_place(|| {
+        tokio::task::block_in_place(|| {
             let handle = Handle::current();
-            handle.block_on(self.memory_storage.get(s)).unwrap()
-        });
-        
-        format!("+{}\r\n", result)
+            
+            if let Some(result) = handle.block_on(self.memory_storage.get(s)) {
+                format!("+{}\r\n", result)
+            } else {
+                "$-1\r\n".to_string()
+            }
+        })
     }
 
     fn needs_more_reading(&self) -> bool {
