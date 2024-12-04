@@ -3,6 +3,7 @@ use crate::storage::MemoryStorage;
 use bytes::Bytes;
 use std::str::from_utf8;
 use std::sync::Arc;
+use std::time::Duration;
 use tokio::runtime::Handle;
 
 #[derive(Debug)]
@@ -20,9 +21,23 @@ impl SetRequest {
 impl Command for SetRequest {
 
     fn process(&self) -> String {
+        
+        let mut duration: Option<Duration> = None;
+
+        if let Some(option_string) = self.data.2.as_ref() {
+            match option_string.to_lowercase().as_str() {
+                "px" => {
+                    if let Some(milis) = self.data.3.as_ref() {
+                        duration = Some(Duration::from_millis(milis.parse::<u64>().unwrap_or(0)));
+                    }
+                }
+                _ => {}
+            }
+        }
+        
         tokio::task::block_in_place(|| {
             let handle = Handle::current();
-            handle.block_on(self.memory_storage.set(&self.data.0, &self.data.1, None));
+            handle.block_on(self.memory_storage.set(&self.data.0, &self.data.1, duration));
         });
         
         "+OK\r\n".to_string()

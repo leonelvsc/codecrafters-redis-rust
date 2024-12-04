@@ -1,11 +1,12 @@
 use std::collections::HashMap;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 use tokio::sync::RwLock;
 
 #[derive(Debug)]
 struct SavedData {
     data: String,
     timeout: Option<Duration>,
+    created_at: Instant,
 }
 
 #[derive(Debug)]
@@ -21,10 +22,19 @@ impl MemoryStorage {
     }
 
     pub async fn set(&self, key: &str, value: &str, timeout: Option<Duration>) {
-        self.data.write().await.insert(String::from(key), SavedData { data: String::from(value), timeout });
+        self.data.write().await.insert(String::from(key), SavedData { data: String::from(value), timeout, created_at: Instant::now() });
     }
 
     pub async fn get(&self, key: &str) -> Option<String> {
-        Some(self.data.read().await.get(key)?.data.clone())
+        if let Some(res) = self.data.read().await.get(key) {
+
+            if Instant::now().duration_since(res.created_at) < res.timeout? {
+                Some(res.data.clone())
+            } else {
+                None
+            }
+        } else {
+            None
+        }
     }
 }
