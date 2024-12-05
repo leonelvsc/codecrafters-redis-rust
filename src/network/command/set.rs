@@ -44,7 +44,7 @@ impl Command for SetRequest {
     }
 
     fn needs_more_reading(&self) -> bool {
-        self.data.0.is_empty() || self.data.1.is_empty()
+        self.data.0.is_empty() || self.data.1.is_empty() || self.data.2.is_none() || self.data.3.is_none()
     }
 
     fn set_data(&mut self, data: Bytes) {
